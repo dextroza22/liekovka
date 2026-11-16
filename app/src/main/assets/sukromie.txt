@@ -1,0 +1,31 @@
+Zásady ochrany súkromia
+Účinné od 14. 11. 2026
+
+## Kto aplikáciu prevádzkuje
+{MENO}, kontakt: {EMAIL}.
+
+## Aké údaje aplikácia spracúva
+Liekovka nevyžaduje účet a nezbiera žiadne osobné údaje. Lieky, osoby, dátumy exspirácie a poznámky, ktoré si uložíte do lekárničky, sa ukladajú len vo vašom zariadení. Prevádzkovateľ k nim nemá prístup a nikam sa neodosielajú. Zálohovanie týchto údajov do cloudu je v aplikácii vypnuté.
+
+## Pripojenie na internet
+Aplikácia sa pripája na internet len preto, aby si stiahla verejné údaje o liekoch (jeden súbor uložený na službe GitHub Pages). Server pri tom vidí vašu IP adresu, ako pri návšteve ktorejkoľvek webovej stránky. O vašej lekárničke sa pri tom neodosiela nič.
+
+Keď si otvoríte príbalový leták, SPC alebo oznam o stiahnutí lieku, otvorí sa webová stránka ŠÚKL. Tá sa riadi vlastnými zásadami ochrany súkromia.
+
+## Záloha a zdieľanie
+Súbor so zálohou lekárničky a zdieľaný zoznam liekov vznikajú len na váš pokyn. O tom, kam ich uložíte alebo komu ich pošlete, rozhodujete vy.
+
+## Reklama a sledovanie
+Aplikácia neobsahuje reklamu, analytické nástroje ani žiadne sledovanie.
+
+## Oprávnenia
+Prístup na internet (stiahnutie údajov o liekoch) a upozornenia (zmeny pri liekoch v lekárničke). Upozornenia môžete kedykoľvek vypnúť v nastaveniach telefónu.
+
+## Vymazanie údajov
+Všetky svoje údaje vymažete v časti Nastavenia tlačidlom „Vymazať všetky moje údaje“ alebo odinštalovaním aplikácie.
+
+## Zmeny zásad
+Ak sa tieto zásady zmenia, nové znenie zverejníme na tejto stránke a v aplikácii.
+
+## Kontakt
+{EMAIL}

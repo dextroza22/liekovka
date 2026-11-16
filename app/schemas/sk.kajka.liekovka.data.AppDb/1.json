@@ -1,0 +1,327 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "e27fc2f0b220232fad1c875b31e7945c",
+    "entities": [
+      {
+        "tableName": "liek",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`kod` TEXT NOT NULL, `nazov` TEXT NOT NULL, `doplnok` TEXT NOT NULL, `atc` TEXT NOT NULL, `latka` TEXT NOT NULL, `vydaj` TEXT NOT NULL, `drzitel` TEXT NOT NULL, `skupina` INTEGER NOT NULL, `cena` REAL, `uhrada` REAL, `doplatok` REAL, `spc` TEXT NOT NULL, `pil` TEXT NOT NULL, `reg` TEXT NOT NULL, `hladaj` TEXT NOT NULL, `vypadok` TEXT, `vypadokOd` TEXT, PRIMARY KEY(`kod`))",
+        "fields": [
+          {
+            "fieldPath": "kod",
+            "columnName": "kod",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nazov",
+            "columnName": "nazov",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "doplnok",
+            "columnName": "doplnok",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "atc",
+            "columnName": "atc",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latka",
+            "columnName": "latka",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vydaj",
+            "columnName": "vydaj",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "drzitel",
+            "columnName": "drzitel",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "skupina",
+            "columnName": "skupina",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cena",
+            "columnName": "cena",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uhrada",
+            "columnName": "uhrada",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "doplatok",
+            "columnName": "doplatok",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "spc",
+            "columnName": "spc",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pil",
+            "columnName": "pil",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reg",
+            "columnName": "reg",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hladaj",
+            "columnName": "hladaj",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vypadok",
+            "columnName": "vypadok",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "vypadokOd",
+            "columnName": "vypadokOd",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "kod"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_liek_skupina",
+            "unique": false,
+            "columnNames": [
+              "skupina"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_liek_skupina` ON `${TABLE_NAME}` (`skupina`)"
+          },
+          {
+            "name": "index_liek_atc",
+            "unique": false,
+            "columnNames": [
+              "atc"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_liek_atc` ON `${TABLE_NAME}` (`atc`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "skupina",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `atc` TEXT NOT NULL, `latka` TEXT NOT NULL, `forma` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "atc",
+            "columnName": "atc",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latka",
+            "columnName": "latka",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "forma",
+            "columnName": "forma",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "moj_liek",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `kod` TEXT NOT NULL, `nazov` TEXT NOT NULL, `doplnok` TEXT NOT NULL, `pridane` INTEGER NOT NULL, `exspiracia` TEXT, `poznamka` TEXT NOT NULL, `posledDoplatok` REAL, `posledVypadok` TEXT, `posledExistuje` INTEGER NOT NULL, `upozornenieExspiracia` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kod",
+            "columnName": "kod",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nazov",
+            "columnName": "nazov",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "doplnok",
+            "columnName": "doplnok",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pridane",
+            "columnName": "pridane",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exspiracia",
+            "columnName": "exspiracia",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "poznamka",
+            "columnName": "poznamka",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "posledDoplatok",
+            "columnName": "posledDoplatok",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posledVypadok",
+            "columnName": "posledVypadok",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posledExistuje",
+            "columnName": "posledExistuje",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "upozornenieExspiracia",
+            "columnName": "upozornenieExspiracia",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_moj_liek_kod",
+            "unique": false,
+            "columnNames": [
+              "kod"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_moj_liek_kod` ON `${TABLE_NAME}` (`kod`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "upozornenie",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `kod` TEXT NOT NULL, `nazov` TEXT NOT NULL, `text` TEXT NOT NULL, `cas` INTEGER NOT NULL, `precitane` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kod",
+            "columnName": "kod",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nazov",
+            "columnName": "nazov",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "text",
+            "columnName": "text",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cas",
+            "columnName": "cas",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "precitane",
+            "columnName": "precitane",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e27fc2f0b220232fad1c875b31e7945c')"
+    ]
+  }
+}

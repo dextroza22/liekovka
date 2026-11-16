@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Liekovka</string>
+    <string name="channel_changes">Zmeny pri mojich liekoch</string>
+    <string name="channel_changes_desc">Výpadky dodávok, zmeny doplatku a blížiaca sa exspirácia liekov v lekárničke</string>
+</resources>

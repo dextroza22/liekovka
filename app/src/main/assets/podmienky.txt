@@ -1,0 +1,25 @@
+Podmienky používania
+Účinné od 14. 11. 2026
+
+## Čo je Liekovka
+Liekovka je informačná aplikácia, ktorá prehľadne zobrazuje verejne dostupné údaje o liekoch na Slovensku. Nie je oficiálnou aplikáciou Štátneho ústavu pre kontrolu liečiv (ŠÚKL) ani Ministerstva zdravotníctva SR a nie je s nimi nijako spojená. Prevádzkuje ju {MENO}.
+
+## Zdroje údajov
+Register liekov, hlásenia o prerušení dodávok a oznamy o stiahnutí liekov z trhu pochádzajú zo ŠÚKL (www.sukl.sk). Ceny, úhrady a doplatky pochádzajú zo zoznamu kategorizovaných liekov Ministerstva zdravotníctva SR (www.health.gov.sk). Pri údajoch je uvedené, ku ktorému dňu platia.
+
+## Informatívny charakter
+Údaje v aplikácii majú len informatívny charakter. Aplikácia nenahrádza lekára ani lekárnika, nie je zdravotníckou pomôckou a neslúži na diagnostiku, liečbu ani rozhodovanie o dávkovaní. Liek nemeňte, nevysadzujte ani nezačínajte užívať len na základe údajov z aplikácie. Vždy sa poraďte s lekárom alebo lekárnikom.
+
+## Presnosť a aktuálnosť
+Údaje preberáme z úradných zdrojov automaticky a snažíme sa, aby boli správne a aktuálne. Nemôžeme však zaručiť, že sú úplné, bezchybné a vždy aktuálne. Rozhodujúce sú údaje a dokumenty zverejnené ŠÚKL a ministerstvom. Skutočný doplatok v lekárni sa môže líšiť.
+
+Upozornenia (výpadok, stiahnutie šarže, zmena doplatku, exspirácia) sú doplnková služba. Nemusia prísť včas alebo vôbec, napríklad ak telefón nie je pripojený na internet alebo má upozornenia vypnuté. Nespoliehajte sa na ne ako na jediný zdroj informácií.
+
+## Nezávislosť
+Aplikácia neobsahuje reklamu a nie je financovaná výrobcami liekov, distribútormi ani lekárňami. Lieky s rovnakou účinnou látkou sa zoraďujú len podľa doplatku a dostupnosti. Aplikácia žiadny liek neodporúča.
+
+## Zodpovednosť
+Aplikáciu používate na vlastnú zodpovednosť. Prevádzkovateľ nezodpovedá za škodu, ktorá vznikne použitím údajov z aplikácie, v rozsahu, v akom to pripúšťajú právne predpisy.
+
+## Chyby v údajoch
+Ak nájdete nesprávny údaj, napíšte nám cez tlačidlo „Nahlásiť chybu v údajoch“ alebo na {EMAIL}.

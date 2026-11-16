@@ -1,0 +1,62 @@
+# Každý deň stiahne aktuálne dáta zo ŠÚKL a MZ SR a zverejní ich cez GitHub Pages.
+# Aplikácia si ich sťahuje z https://<pouzivatel>.github.io/<repozitar>/lieky.json.gz
+name: Aktualizácia dát
+
+on:
+  schedule:
+    - cron: "17 5 * * *"     # denne 5:17 UTC: dáta (výpadky a stiahnutia sa menia denne, doplatky mesačne)
+    - cron: "41 6 1 * *"     # 1. deň v mesiaci: záznam do repozitára, aby GitHub plánovanú úlohu nevypol
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event.schedule != '41 6 1 * *'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install openpyxl==3.1.5
+      - name: Testy skriptu
+        run: python -m unittest tools/test_build_data.py
+      - name: Zostaviť dáta
+        run: python3 tools/build_data.py --out dist
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  # GitHub vo verejných repozitároch vypína plánované úlohy po 60 dňoch bez zmeny v repozitári.
+  # Tento krok raz mesačne zapíše dátum do súboru, takže sa denná aktualizácia nikdy nevypne.
+  zaznam:
+    if: github.event.schedule == '41 6 1 * *'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          date -u +"%Y-%m-%d" > .github/posledna-aktivita.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/posledna-aktivita.txt
+          git commit -m "Mesačný záznam (aby sa automatická aktualizácia dát nevypla)" || echo "bez zmeny"
+          git push
