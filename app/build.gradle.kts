@@ -22,7 +22,7 @@ android {
         // Prevádzkovateľ a kontakt: zobrazujú sa v aplikácii, v zásadách ochrany súkromia a v podmienkach používania.
         buildConfigField("String", "PREVADZKOVATEL", "\"Lukáš Babinec\"")
         buildConfigField("String", "KONTAKT_EMAIL", "\"kajkaforkids@gmail.com\"")
-        buildConfigField("String", "DATA_URL", "\"https://YOUR_GITHUB_USER.github.io/liekovka/\"")
+        buildConfigField("String", "DATA_URL", "\"https://dextroza22.github.io/liekovka/\"")
     }
 
     buildTypes {
