@@ -12,3 +12,4 @@ keystore.properties
 *.keystore
 __pycache__/
 app/src/main/assets/lieky.json.gz
+kluc/
