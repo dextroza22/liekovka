@@ -19,9 +19,10 @@ class LiekovkaApp : Application() {
         super.onCreate()
         Notif.vytvorKanal(this)
         Pripominac.vytvorKanal(this)
+        Plus.init(this)
         // pri každej zmene lekárničky (časy, pridanie, odstránenie, obnova zo zálohy) naplánovať najbližšiu pripomienku
         kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.SupervisorJob() + kotlinx.coroutines.Dispatchers.IO).launch {
-            sk.kajka.liekovka.data.AppDb.get(this@LiekovkaApp).moje().vsetky()
+            kotlinx.coroutines.flow.combine(sk.kajka.liekovka.data.AppDb.get(this@LiekovkaApp).moje().vsetky(), Plus.odomknute) { _, _ -> }
                 .collect { Pripominac.naplanuj(this@LiekovkaApp) }
         }
         val req = PeriodicWorkRequestBuilder<AktualizaciaWorker>(1, TimeUnit.DAYS)

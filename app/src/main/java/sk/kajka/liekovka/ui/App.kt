@@ -84,6 +84,7 @@ fun App(pociatocnaKarta: String?, onKartaSpracovana: () -> Unit) {
         else -> {}
     }
 
+    PlusSpravy()
     val nav = rememberNavController()
     val zaznam by nav.currentBackStackEntryAsState()
     val aktualna = zaznam?.destination?.route

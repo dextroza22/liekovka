@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -7,26 +9,40 @@ plugins {
 
 android {
     namespace = "sk.kajka.liekovka"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "sk.kajka.liekovka"
         minSdk = 26
-        targetSdk = 35
-        versionCode = 6
-        versionName = "0.6.0"
+        targetSdk = 36
+        versionCode = 7
+        versionName = "1.0.0"
 
-        // Adresa, kde GitHub Pages zverejňuje dáta (lieky.json.gz a meta.json).
-        // Po nastavení repozitára nahraďte svojou adresou, napr. https://kajka.github.io/liekovka/
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // Prevádzkovateľ a kontakt: zobrazujú sa v aplikácii, v zásadách ochrany súkromia a v podmienkach používania.
         buildConfigField("String", "PREVADZKOVATEL", "\"Lukáš Babinec\"")
         buildConfigField("String", "KONTAKT_EMAIL", "\"kajkaforkids@gmail.com\"")
+        // Adresa, kde GitHub Pages zverejňuje dáta (lieky.json.gz a meta.json).
         buildConfigField("String", "DATA_URL", "\"https://dextroza22.github.io/liekovka/\"")
+        // Liekovka Plus (jednorazový nákup cez Google Play). false = všetko zadarmo, nákup sa vôbec neponúka.
+        buildConfigField("boolean", "PLUS_AKTIVNE", "true")
+    }
+
+    // Podpisový kľúč na nahratie do Google Play: súbor keystore.properties (nie je v GitHube, pozri README).
+    val podpis = rootProject.file("keystore.properties")
+    signingConfigs {
+        if (podpis.exists()) create("release") {
+            val p = Properties().apply { podpis.inputStream().use { load(it) } }
+            storeFile = rootProject.file(p.getProperty("storeFile"))
+            storePassword = p.getProperty("storePassword")
+            keyAlias = p.getProperty("keyAlias")
+            keyPassword = p.getProperty("keyPassword")
+        }
     }
 
     buildTypes {
         release {
+            if (podpis.exists()) signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -72,6 +88,7 @@ dependencies {
     ksp("androidx.room:room-compiler:2.6.1")
 
     implementation("androidx.work:work-runtime-ktx:2.10.0")
+    implementation("com.android.billingclient:billing:8.3.0")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.json:json:20240303")   // skutočné org.json pre unit testy (v android.jar sú len prázdne stuby)

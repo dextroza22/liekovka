@@ -2,17 +2,22 @@
 
 Android aplikácia s verejnými informáciami o liekoch na Slovensku pre bežných ľudí aj lekárnikov.
 
-**Čo vie (verzia 0.6)**
+**Čo vie (verzia 1.0)**
+
+Zadarmo je všetko okrem funkcií označených **(Plus)**. Liekovka Plus je jednorazový nákup cez Google Play
+(produkt `liekovka_plus`); prepínač `PLUS_AKTIVNE` v `app/build.gradle.kts` (false = všetko zadarmo).
+Testovacia (debug) verzia má v Nastaveniach prepínač na odomknutie Plus bez platby.
+
 - vyhľadávanie podľa názvu a účinnej látky, v režime pre lekárnika aj podľa ATC kódu a kódu ŠÚKL
 - detail lieku: doplatok, úhrada poisťovne, výdaj, držiteľ registrácie, stav dodávok podľa ŠÚKL
 - lieky s rovnakou účinnou látkou, silou a formou (referenčná skupina MZ SR), zoradené podľa doplatku, s označením najlacnejšieho dostupného
 - odkaz na stránku lieku na sukl.sk s aktuálnym príbalovým letákom (PIL) a SPC
   (adresa sa skladá z názvu a kódu; ak na webe neexistuje, otvorí sa vyhľadávanie podľa kódu ŠÚKL)
 - mená držiteľov registrácie (časť G zoznamu MZ SR)
-- **pripomienky užívania**: pri lieku v lekárničke si používateľ nastaví časy (napr. 8:00 a 20:00); notifikácia s tlačidlami
+- **pripomienky užívania** (Plus): pri lieku v lekárničke si používateľ nastaví časy (napr. 8:00 a 20:00); notifikácia s tlačidlami
   „Užité“ a „Odložiť o 15 min“, po reštarte telefónu sa pripomienky obnovia. Aplikácia dávkovanie nekontroluje ani neodporúča.
-- **koľko doplácam**: súčet doplatkov za jedno balenie každého lieku v lekárničke a koľko by to bolo s dostupnými lacnejšími alternatívami
-- **prehľad pre lekárnikov** (v režime lekárnika na úvodnej obrazovke): nové výpadky za 7/14/30 dní, zmeny doplatkov od budúceho
+- **koľko doplácam** (Plus): súčet doplatkov za jedno balenie každého lieku v lekárničke a koľko by to bolo s dostupnými lacnejšími alternatívami
+- **prehľad pre lekárnikov** (Plus) (v režime lekárnika na úvodnej obrazovke): nové výpadky za 7/14/30 dní, zmeny doplatkov od budúceho
   mesiaca (zvýšenie, zníženie, vyradené) a stiahnutia z trhu, všetko s filtrom podľa ATC
 - **záloha lekárničky** do súboru a obnovenie na novom telefóne (Nastavenia → Záloha lekárničky)
 - **právne náležitosti** v Nastaveniach: vyhlásenie, že nejde o oficiálnu aplikáciu ŠÚKL ani MZ SR, zásady ochrany súkromia,
@@ -21,8 +26,8 @@ Android aplikácia s verejnými informáciami o liekoch na Slovensku pre bežný
 - **Moja lekárnička**: uložené lieky s dátumom exspirácie; upozornenia na výpadok, obnovenie dodávok, zmenu doplatku, zrušenie registrácie a blížiacu sa exspiráciu
 - **zmeny doplatkov vopred**: keď MZ SR zverejní zoznam na budúci mesiac, aplikácia ukáže nový doplatok a upozorní pri liekoch v lekárničke
 - **lacnejšia alternatíva**: pri lieku aj v lekárničke ukáže dostupný liek s rovnakou látkou, silou a formou a nižším doplatkom
-- **osoby (profily)**: samostatná lekárnička pre seba, rodičov či deti; poznámka k lieku (napr. ráno a večer)
-- **zdieľanie zoznamu liekov** ako text alebo PDF (pre lekára, do nemocnice, rodine)
+- **osoby (profily)** (Plus pre viac ako jednu osobu): samostatná lekárnička pre seba, rodičov či deti; poznámka k lieku (napr. ráno a večer)
+- **zdieľanie zoznamu liekov** ako text, alebo PDF (Plus) (pre lekára, do nemocnice, rodine)
 - **stiahnutie z trhu**: oznamy ŠÚKL (RSS + stránka oznamu) s kódom lieku a číslami šarží; upozornenie, ak je liek v lekárničke,
   červený pás v karte lieku a zoznam všetkých stiahnutí za posledný rok
 - nastavenia vzhľadu: svetlá/tmavá téma, štyri veľkosti písma
@@ -92,6 +97,8 @@ Ak úloha zlyhá (napr. ŠÚKL alebo MZ SR zmení formát súboru), GitHub pošl
 - Pri zmene textu uprav aj dátum účinnosti na druhom riadku súboru.
 
 ### 4. Google Play
+Postup, texty do obchodu, ikona, titulná grafika a snímky obrazovky sú v priečinku `google-play/` (`NAVOD.md`).
+
 - **Health apps declaration**: aplikácia zobrazuje informácie o liekoch; nie je zdravotnícka pomôcka, nediagnostikuje ani neurčuje dávkovanie.
 - **Zásady ochrany súkromia** (povinné). Návrh textu je nižšie.
 - **Data safety**: žiadne údaje sa nezbierajú ani nezdieľajú (zoznam liekov je len v zariadení, cloudová záloha je vypnutá).
@@ -108,7 +115,7 @@ Ak úloha zlyhá (napr. ŠÚKL alebo MZ SR zmení formát súboru), GitHub pošl
 - SPC a PIL aplikácia nekopíruje, len odkazuje na oficiálne dokumenty na stránke ŠÚKL.
 - Odporúčanie: pred zverejnením si písomne overiť u ŠÚKL podmienky použitia údajov v aplikácii.
 
-## Obmedzenia verzie 0.6
+## Obmedzenia verzie 1.0
 - Databáza má verziu 2. Lekárnička z testovacej verzie 0.1 sa pri aktualizácii vymaže (pred zverejnením to nevadí).
   Od verzie 2 treba pri zmene tabuliek písať migrácie, aby používatelia o dáta neprišli.
   Migrácie 2 → 3 (stiahnutia) a 3 → 4 (časy pripomienok) sú hotové a overuje ich `MigraciaTest` (spustenie na telefóne/emulátore).

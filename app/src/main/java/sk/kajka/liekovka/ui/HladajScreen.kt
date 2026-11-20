@@ -183,16 +183,22 @@ private fun Uvod(repo: Repository, lekarnik: Boolean, onNavrh: (String) -> Unit,
         }
 
         if (lekarnik) {
+            val plus = plusOdomknute()
+            var plusDialog by remember { mutableStateOf(false) }
+            if (plusDialog) PlusDialog("Prehľad pre lekárnikov") { plusDialog = false }
             Surface(
                 color = cs.surfaceContainerLow, shape = RoundedCornerShape(18.dp),
-                modifier = Modifier.fillMaxWidth().padding(top = 12.dp).clickable { onKarta("prehlad") },
+                modifier = Modifier.fillMaxWidth().padding(top = 12.dp).clickable { if (plus) onKarta("prehlad") else plusDialog = true },
             ) {
                 Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                     Surface(color = cs.secondaryContainer, contentColor = cs.onSecondaryContainer, shape = RoundedCornerShape(14.dp)) {
                         Icon(Icons.AutoMirrored.Filled.List, null, Modifier.padding(10.dp).size(24.dp))
                     }
                     Column(Modifier.weight(1f).padding(horizontal = 14.dp)) {
-                        Text("Prehľad pre lekárnikov", style = MaterialTheme.typography.titleMedium)
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text("Prehľad pre lekárnikov", style = MaterialTheme.typography.titleMedium)
+                            if (!plus) PlusStitok(Modifier.padding(start = 8.dp))
+                        }
                         Text("Nové výpadky, zmeny doplatkov od budúceho mesiaca a stiahnutia, s filtrom ATC",
                             style = MaterialTheme.typography.bodyMedium, color = cs.onSurfaceVariant)
                     }

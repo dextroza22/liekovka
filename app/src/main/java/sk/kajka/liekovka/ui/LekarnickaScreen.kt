@@ -89,6 +89,8 @@ fun LekarnickaScreen(onOtvor: (String) -> Unit) {
     var upravProfil by remember { mutableStateOf<Profil?>(null) }
     var novyProfil by remember { mutableStateOf(false) }
     var zdielat by remember { mutableStateOf(false) }
+    var plusDialog by remember { mutableStateOf<String?>(null) }
+    val plus = plusOdomknute()
     val zoznam = moje ?: return
     if (profil == null) return
 
@@ -112,8 +114,9 @@ fun LekarnickaScreen(onOtvor: (String) -> Unit) {
                         trailingIcon = if (vybrany) ({ Icon(Icons.Default.Edit, "Upraviť", Modifier.size(16.dp)) }) else null,
                     )
                 }
-                AssistChip(onClick = { novyProfil = true }, label = { Text("Pridať osobu") },
-                    leadingIcon = { Icon(Icons.Default.Add, null, Modifier.size(18.dp)) })
+                AssistChip(onClick = { if (plus) novyProfil = true else plusDialog = "Lekárnička pre viac osôb" }, label = { Text("Pridať osobu") },
+                    leadingIcon = { Icon(Icons.Default.Add, null, Modifier.size(18.dp)) },
+                    trailingIcon = if (plus) null else ({ PlusStitok() }))
             }
         }
         if (zoznam.isEmpty()) {
@@ -134,7 +137,7 @@ fun LekarnickaScreen(onOtvor: (String) -> Unit) {
                 )
             }
         } else {
-            item { Suhrny(zoznam, profil.id, repo) }
+            item { Suhrny(zoznam, profil.id, repo, plus, onPlus = { plusDialog = "Súčet doplatkov" }) }
             items(zoznam, key = { it.id }) { m -> PolozkaLekarnicky(m, repo, onOtvor) }
         }
     }
@@ -144,12 +147,16 @@ fun LekarnickaScreen(onOtvor: (String) -> Unit) {
         title = { Text("Zdieľať zoznam liekov") },
         text = { Text("Prehľad liekov (${profil.meno}) s účinnou látkou, poznámkou a exspiráciou, napríklad pre lekára, do nemocnice alebo pre rodinu.") },
         confirmButton = {
-            TextButton(onClick = { zdielat = false; scope.launch { Zdielanie.pdf(ctx, repo.zoznamNaZdielanie(profil)) } }) { Text("Ako PDF") }
+            TextButton(onClick = {
+                zdielat = false
+                if (plus) scope.launch { Zdielanie.pdf(ctx, repo.zoznamNaZdielanie(profil)) } else plusDialog = "Zoznam liekov ako PDF"
+            }) { Text(if (plus) "Ako PDF" else "Ako PDF (Plus)") }
         },
         dismissButton = {
             TextButton(onClick = { zdielat = false; scope.launch { Zdielanie.text(ctx, repo.zoznamNaZdielanie(profil)) } }) { Text("Ako text") }
         },
     )
+    plusDialog?.let { f -> PlusDialog(f) { plusDialog = null } }
     if (novyProfil) MenoDialog("Pridať osobu", "", onDismiss = { novyProfil = false }) { meno ->
         novyProfil = false
         scope.launch { repo.prefs.setProfil(repo.db.profily().insert(Profil(meno = meno))) }
@@ -193,7 +200,7 @@ private fun MenoDialog(titulok: String, pociatok: String, onDismiss: () -> Unit,
 }
 
 @Composable
-private fun Suhrny(zoznam: List<MojLiek>, profilId: Long, repo: Repository) {
+private fun Suhrny(zoznam: List<MojLiek>, profilId: Long, repo: Repository, plus: Boolean, onPlus: () -> Unit) {
     val sVypadkom by remember(profilId) { repo.db.moje().sVypadkom(profilId) }.collectAsState(0)
     val dnes = LocalDate.now()
     val coskoro = zoznam.count { m ->
@@ -217,6 +224,19 @@ private fun Suhrny(zoznam: List<MojLiek>, profilId: Long, repo: Repository) {
                 l to l?.takeIf { it.skupina >= 0 }?.let { d.najlacnejsiNow(it.skupina, m.kod) }
             })
         }
+    }
+    if (!plus) {
+        Surface(color = cs.surfaceContainerHigh, shape = RoundedCornerShape(16.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp).clickable(onClick = onPlus)) {
+            Row(Modifier.padding(horizontal = 14.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text("Koľko doplácam", style = MaterialTheme.typography.labelLarge, color = cs.onSurfaceVariant)
+                    Text("Súčet doplatkov za všetky lieky a koľko môžete ušetriť", style = MaterialTheme.typography.bodyMedium)
+                }
+                PlusStitok()
+            }
+        }
+        return
     }
     sucet?.takeIf { it.spolu > 0 || it.bezUdaja < zoznam.size }?.let { s ->
         Surface(color = cs.surfaceContainerHigh, shape = RoundedCornerShape(16.dp), modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
@@ -258,7 +278,7 @@ private fun PolozkaLekarnicky(m: MojLiek, repo: Repository, onOtvor: (String) ->
                 if (m.poznamka.isNotBlank()) Text("Poznámka: ${m.poznamka}", style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(top = 4.dp))
                 val casy = parsujCasy(m.casy)
-                if (casy.isNotEmpty()) Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
+                if (casy.isNotEmpty() && plusOdomknute()) Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
                     Icon(Icons.Default.Notifications, null, Modifier.size(16.dp), tint = cs.primary)
                     Text(" Pripomienky: ${casyText(casy)}", style = MaterialTheme.typography.bodyMedium, color = cs.primary)
                 }
@@ -337,6 +357,8 @@ fun UpravDialog(m: MojLiek, onDismiss: () -> Unit, onUloz: (String?, String, Str
     var casy by remember { mutableStateOf(parsujCasy(m.casy)) }
     var datumDialog by remember { mutableStateOf(false) }
     var casDialog by remember { mutableStateOf(false) }
+    var plusDialog by remember { mutableStateOf(false) }
+    val plus = plusOdomknute()
     val povolenie = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -349,7 +371,10 @@ fun UpravDialog(m: MojLiek, onDismiss: () -> Unit, onUloz: (String?, String, Str
                 OutlinedTextField(pozn, { pozn = it.take(120) }, label = { Text("Poznámka, napr. ráno a večer") },
                     modifier = Modifier.fillMaxWidth())
                 Text("Pripomienky užívania", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 14.dp))
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                if (!plus) Row(verticalAlignment = Alignment.CenterVertically) {
+                    TextButton(onClick = { plusDialog = true }) { Text("Nastaviť pripomienky") }
+                    PlusStitok()
+                } else FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     casy.forEach { c ->
                         InputChip(selected = false, onClick = { casy = casy - c }, label = { Text(casyText(listOf(c))) },
                             trailingIcon = { Icon(Icons.Default.Close, "Odstrániť čas", Modifier.size(16.dp)) })
@@ -361,10 +386,11 @@ fun UpravDialog(m: MojLiek, onDismiss: () -> Unit, onUloz: (String?, String, Str
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         },
-        confirmButton = { TextButton(onClick = { onUloz(exp, pozn, formatujCasy(casy)) }) { Text("Uložiť") } },
+        confirmButton = { TextButton(onClick = { onUloz(exp, pozn, if (plus) formatujCasy(casy) else m.casy) }) { Text("Uložiť") } },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Zrušiť") } },
     )
     if (datumDialog) ExspiraciaDialog(exp, onDismiss = { datumDialog = false }) { exp = it; datumDialog = false }
+    if (plusDialog) PlusDialog("Pripomienky užívania") { plusDialog = false }
     if (casDialog) CasDialog(onDismiss = { casDialog = false }) { c ->
         casDialog = false
         casy = (casy + c).distinct().sorted()

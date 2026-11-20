@@ -48,6 +48,7 @@ object Pripominac {
             val casy = AppDb.get(app).moje().allNow().flatMap { parsujCasy(it.casy) }.toSet()
             val am = app.getSystemService(AlarmManager::class.java)
             val pi = budik(app, null)
+            if (!Plus.odomknute.value) { am.cancel(pi); return@launch }   // pripomienky sú súčasťou Plus
             val dalsi = najblizsiCas(casy, LocalDateTime.now())
             if (dalsi == null) { am.cancel(pi); return@launch }
             am.setWindow(AlarmManager.RTC_WAKEUP, dalsi.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(), 5 * 60_000L,

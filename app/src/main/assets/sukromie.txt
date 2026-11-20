@@ -1,5 +1,5 @@
 Zásady ochrany súkromia
-Účinné od 14. 11. 2026
+Účinné od 20. 11. 2026
 
 ## Kto aplikáciu prevádzkuje
 {MENO}, kontakt: {EMAIL}.
@@ -12,6 +12,9 @@ Aplikácia sa pripája na internet len preto, aby si stiahla verejné údaje o l
 
 Keď si otvoríte príbalový leták, SPC alebo oznam o stiahnutí lieku, otvorí sa webová stránka ŠÚKL. Tá sa riadi vlastnými zásadami ochrany súkromia.
 
+## Nákup Liekovky Plus
+Platbu spracúva Google Play. Prevádzkovateľ nedostáva vaše platobné údaje. Od spoločnosti Google dostáva len údaje o nákupe (napríklad dátum, krajinu a cenu), ktoré potrebuje na vedenie účtovníctva a vybavenie prípadnej reklamácie. Aplikácia overuje nákup priamo v Google Play vo vašom telefóne a informáciu o ňom si ukladá v zariadení.
+
 ## Záloha a zdieľanie
 Súbor so zálohou lekárničky a zdieľaný zoznam liekov vznikajú len na váš pokyn. O tom, kam ich uložíte alebo komu ich pošlete, rozhodujete vy.
 
@@ -19,7 +22,7 @@ Súbor so zálohou lekárničky a zdieľaný zoznam liekov vznikajú len na vá�
 Aplikácia neobsahuje reklamu, analytické nástroje ani žiadne sledovanie.
 
 ## Oprávnenia
-Prístup na internet (stiahnutie údajov o liekoch) a upozornenia (zmeny pri liekoch v lekárničke). Upozornenia môžete kedykoľvek vypnúť v nastaveniach telefónu.
+Prístup na internet (stiahnutie údajov o liekoch), upozornenia (zmeny pri liekoch v lekárničke a pripomienky užívania), spustenie po zapnutí telefónu (aby sa obnovili nastavené pripomienky) a nákupy cez Google Play (Liekovka Plus). Upozornenia môžete kedykoľvek vypnúť v nastaveniach telefónu.
 
 ## Vymazanie údajov
 Všetky svoje údaje vymažete v časti Nastavenia tlačidlom „Vymazať všetky moje údaje“ alebo odinštalovaním aplikácie.

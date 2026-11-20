@@ -67,6 +67,8 @@ fun InfoScreen() {
 
         Vzhlad(repo)
 
+        PlusKarta()
+
         Nadpis("Zobrazenie údajov")
         Karta {
             Row(

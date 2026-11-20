@@ -1,5 +1,5 @@
 Podmienky používania
-Účinné od 14. 11. 2026
+Účinné od 20. 11. 2026
 
 ## Čo je Liekovka
 Liekovka je informačná aplikácia, ktorá prehľadne zobrazuje verejne dostupné údaje o liekoch na Slovensku. Nie je oficiálnou aplikáciou Štátneho ústavu pre kontrolu liečiv (ŠÚKL) ani Ministerstva zdravotníctva SR a nie je s nimi nijako spojená. Prevádzkuje ju {MENO}.
@@ -15,8 +15,17 @@ Register liekov, hlásenia o prerušení dodávok a oznamy o stiahnutí liekov z
 
 Upozornenia (výpadok, stiahnutie šarže, zmena doplatku, exspirácia) sú doplnková služba. Nemusia prísť včas alebo vôbec, napríklad ak telefón nie je pripojený na internet alebo má upozornenia vypnuté. Nespoliehajte sa na ne ako na jediný zdroj informácií.
 
+Pripomienky užívania sú len pomôcka. Časy si nastavujete sami podľa pokynov lekára, aplikácia dávkovanie nekontroluje ani neodporúča. Pripomienka môže prísť neskôr alebo vôbec, napríklad v úspornom režime telefónu.
+
+## Liekovka Plus
+Základné funkcie aplikácie sú zadarmo. Liekovka Plus je jednorazový nákup v aplikácii, ktorý odomkne ďalšie funkcie: lekárničku pre viac osôb, pripomienky užívania, súčet doplatkov, zoznam liekov ako PDF a prehľad pre lekárnikov. Nejde o predplatné. Cena je uvedená pri nákupe.
+
+Platbu spracúva Google Play podľa svojich podmienok. Vrátenie peňazí sa riadi pravidlami Google Play; ak máte s nákupom problém, napíšte nám na {EMAIL}. Nákup je viazaný na váš účet Google a na inom zariadení s tým istým účtom ho obnovíte v Nastaveniach tlačidlom „Obnoviť nákup“.
+
+Upozornenia na výpadky dodávok, zmeny doplatku a stiahnutie liekov z trhu zostávajú bezplatné pre všetkých. Funkcie, za ktoré ste zaplatili, vám neodoberieme.
+
 ## Nezávislosť
-Aplikácia neobsahuje reklamu a nie je financovaná výrobcami liekov, distribútormi ani lekárňami. Lieky s rovnakou účinnou látkou sa zoraďujú len podľa doplatku a dostupnosti. Aplikácia žiadny liek neodporúča.
+Aplikácia neobsahuje reklamu a nie je financovaná výrobcami liekov, distribútormi ani lekárňami. Jej vývoj podporujú len používatelia nákupom Liekovky Plus. Lieky s rovnakou účinnou látkou sa zoraďujú len podľa doplatku a dostupnosti. Aplikácia žiadny liek neodporúča.
 
 ## Zodpovednosť
 Aplikáciu používate na vlastnú zodpovednosť. Prevádzkovateľ nezodpovedá za škodu, ktorá vznikne použitím údajov z aplikácie, v rozsahu, v akom to pripúšťajú právne predpisy.
