@@ -116,6 +116,7 @@ fun PlusKarta() {
     val ctx = LocalContext.current
     val ma = plusOdomknute()
     var dialog by remember { mutableStateOf(false) }
+    var kodDialog by remember { mutableStateOf(false) }
     val cs = MaterialTheme.colorScheme
     Nadpis("Liekovka Plus")
     Karta {
@@ -131,6 +132,7 @@ fun PlusKarta() {
                         }
                     }
                 }) { Text("Obnoviť nákup") }
+                if (!ma) TextButton(onClick = { kodDialog = true }) { Text("Mám kód") }
             }
             if (BuildConfig.DEBUG) {
                 var test by remember { mutableStateOf(Plus.testovacie()) }
@@ -142,4 +144,28 @@ fun PlusKarta() {
         }
     }
     if (dialog) PlusDialog(null) { dialog = false }
+    if (kodDialog) KodDialog { kodDialog = false }
+}
+
+@Composable
+private fun KodDialog(onDismiss: () -> Unit) {
+    val ctx = LocalContext.current
+    var kod by remember { mutableStateOf("") }
+    var chyba by remember { mutableStateOf(false) }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Kód na odomknutie Plus") },
+        text = {
+            androidx.compose.material3.OutlinedTextField(kod, { kod = it.take(40); chyba = false }, singleLine = true,
+                label = { Text("Kód") }, isError = chyba,
+                supportingText = { if (chyba) Text("Kód nie je správny.") })
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                if (Plus.skusKod(kod)) { Toast.makeText(ctx, "Liekovka Plus je odomknutá.", Toast.LENGTH_LONG).show(); onDismiss() }
+                else chyba = true
+            }, enabled = kod.isNotBlank()) { Text("Odomknúť") }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Zrušiť") } },
+    )
 }

@@ -24,6 +24,8 @@ import kotlinx.coroutines.flow.StateFlow
 object Plus {
     const val PRODUKT = "liekovka_plus"
     private const val PREFS = "plus"
+    /** SHA-256 kódu na odomknutie (pre kontrolu Google Play a darčekové odomknutie); samotný kód v aplikácii nie je. */
+    private const val KOD_HASH = "66c2fbae49ca97cf570f28875f7b6b485b05557daff17d3c52a71a02e0525010"
 
     private val _odomknute = MutableStateFlow(true)
     /** Má používateľ funkcie Plus? */
@@ -42,7 +44,7 @@ object Plus {
 
     fun init(ctx: Context) {
         app = ctx.applicationContext
-        _odomknute.value = !BuildConfig.PLUS_AKTIVNE || kupene() || testovacie()
+        _odomknute.value = !BuildConfig.PLUS_AKTIVNE || kupene() || testovacie() || kodom()
         if (!BuildConfig.PLUS_AKTIVNE) return
         val c = BillingClient.newBuilder(app)
             .setListener(PurchasesUpdatedListener { r, nakupy -> poNakupe(r, nakupy) })
@@ -60,16 +62,27 @@ object Plus {
 
     private fun sp() = app.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
     private fun kupene() = sp().getBoolean("kupene", false)
+    private fun kodom() = sp().getBoolean("kod", false)
+
+    /** Odomkne Plus kódom. Vráti true, ak je kód správny. */
+    fun skusKod(kod: String): Boolean {
+        val h = java.security.MessageDigest.getInstance("SHA-256").digest(kod.trim().uppercase().toByteArray())
+            .joinToString("") { "%02x".format(it) }
+        if (h != KOD_HASH) return false
+        sp().edit().putBoolean("kod", true).apply()
+        _odomknute.value = true
+        return true
+    }
     /** Len v testovacej (debug) verzii: odomknutie bez Google Play na vyskúšanie. */
     fun testovacie() = BuildConfig.DEBUG && sp().getBoolean("test", false)
     fun nastavTestovacie(v: Boolean) {
         if (!BuildConfig.DEBUG) return
         sp().edit().putBoolean("test", v).apply()
-        _odomknute.value = !BuildConfig.PLUS_AKTIVNE || kupene() || v
+        _odomknute.value = !BuildConfig.PLUS_AKTIVNE || kupene() || v || kodom()
     }
     private fun uloz(v: Boolean) {
         sp().edit().putBoolean("kupene", v).apply()
-        _odomknute.value = !BuildConfig.PLUS_AKTIVNE || v || testovacie()
+        _odomknute.value = !BuildConfig.PLUS_AKTIVNE || v || testovacie() || kodom()
     }
 
     private fun nacitajCenu() {
